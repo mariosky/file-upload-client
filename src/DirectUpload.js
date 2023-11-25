@@ -5,7 +5,7 @@ import { useState } from 'react';
 
 //import { BASE_BACKEND_URL } from 'config/urls';
 //import { getConfig } from 'config/api';
-const BASE_BACKEND_URL = 'http://itt2.ddns.net:8000';
+const BASE_BACKEND_URL = 'http://ittweb.ddns.net:8000';
 
 class Car extends React.Component {
   render() {
@@ -76,7 +76,7 @@ const DirectUploadExample = () => {
       <h1>Sube imagen a S3</h1>
       <div>Selecciona los archivos a subir:</div>
 
-      <input id="input" type="file" onChange={onInputChange} />
+      <input id="input" type="file" accept="image/*" onChange={onInputChange} />
 
       <div>{message}</div>
      <div id="container">
