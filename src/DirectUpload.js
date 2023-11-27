@@ -5,12 +5,13 @@ import { useState } from 'react';
 
 //import { BASE_BACKEND_URL } from 'config/urls';
 //import { getConfig } from 'config/api';
-const BASE_BACKEND_URL = 'http://ittweb.ddns.net:8000';
+const BASE_BACKEND_URL = 'http://54.146.67.173:8000';
+let image = undefined;
 
-class Car extends React.Component {
-  render() {
-    return <h2>Hi, I am a Car!</h2>
-  }
+function Image({image_url}) {
+    return  (
+    <img src={ image_url } alt='uploaded' />  
+  );
 }
 
 const directUploadStart = ({ fileName, fileType }) => {
@@ -23,13 +24,14 @@ const directUploadStart = ({ fileName, fileType }) => {
   );
 };
 
-const directUploadDo = ({ data, file }) => {
+const directUploadDo = ({ data, file, setOriginal }) => {
   const postData = new FormData();
 
   for (const key in data?.fields) {
     postData.append(key, data.fields[key]);
   }
-
+  image = data.url+data.fields['key']
+  setOriginal(data.url+data.fields['key']);
   postData.append('file', file);
 
   return axios
@@ -44,8 +46,10 @@ const directUploadFinish = ({ data }) => {
   );
 };
 
+  
 const DirectUploadExample = () => {
   const [message, setMessage] = useState();
+  const [original, setOriginal] = useState();
 
   const onInputChange = (event) => {
     const file = event.target.files[0];
@@ -56,16 +60,16 @@ const DirectUploadExample = () => {
         fileType: file.type
       })
         .then((response) =>
-          directUploadDo({ data: response.data, file })
+          directUploadDo({ data: response.data, file, setOriginal })
             .then(() => directUploadFinish({ data: response.data }))
             .then(() => {
               setMessage('File upload completed!');
+                 const root = ReactDOM.createRoot(document.getElementById('container'));
+                 root.render(<Image image_url={image} />);
             })
         )
         .catch((error) => { 
           setMessage('File upload failed!');
-         const root = ReactDOM.createRoot(document.getElementById('container'));
-         root.render(<Car />);
           
         });
     }
@@ -78,7 +82,7 @@ const DirectUploadExample = () => {
 
       <input id="input" type="file" accept="image/*" onChange={onInputChange} />
 
-      <div>{message}</div>
+      <div>{message} {original}</div>
      <div id="container">
      
      </div>

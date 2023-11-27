@@ -1,13 +1,11 @@
 import React from 'react';
 
 import DirectUpload from './DirectUpload.js';
-import PersonList from './PersonList.js';
 
 function App() {
   return (
     <div ClassName="App">
       <DirectUpload />
-      <PersonList />
     </div>
   )
 }
