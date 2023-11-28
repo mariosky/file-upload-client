@@ -2,17 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import axios from 'axios';
 import { useState } from 'react';
-
+import EventSourceComponent from './Notify.js';
 //import { BASE_BACKEND_URL } from 'config/urls';
 //import { getConfig } from 'config/api';
 const BASE_BACKEND_URL = 'http://54.146.67.173:8000';
 let image = undefined;
 
-function Image({image_url}) {
+/*function Image({image_url}) {
     return  (
     <img src={ image_url } alt='uploaded' />  
   );
-}
+}*/
 
 const directUploadStart = ({ fileName, fileType }) => {
   return axios.post(
@@ -64,8 +64,13 @@ const DirectUploadExample = () => {
             .then(() => directUploadFinish({ data: response.data }))
             .then(() => {
               setMessage('File upload completed!');
+                // const root = ReactDOM.createRoot(document.getElementById('container'));
+                // root.render(<Image image_url={image} />);
+            })
+            .then(() => {
+             // setMessage('File upload completed!');
                  const root = ReactDOM.createRoot(document.getElementById('container'));
-                 root.render(<Image image_url={image} />);
+                 root.render( <EventSourceComponent image_url={image} />);
             })
         )
         .catch((error) => { 
@@ -86,6 +91,7 @@ const DirectUploadExample = () => {
      <div id="container">
      
      </div>
+    
     </div>
   );
 };
