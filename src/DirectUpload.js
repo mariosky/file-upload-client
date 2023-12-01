@@ -5,9 +5,9 @@ import { useState } from 'react';
 import EventSourceComponent from './Notify.js';
 //import { BASE_BACKEND_URL } from 'config/urls';
 //import { getConfig } from 'config/api';
-const BASE_BACKEND_URL = 'http://54.146.67.173:8000';
+const BASE_BACKEND_URL = 'http://44.219.209.251:8000';
 let image = undefined;
-
+let image_url = undefined
 /*function Image({image_url}) {
     return  (
     <img src={ image_url } alt='uploaded' />  
@@ -30,7 +30,8 @@ const directUploadDo = ({ data, file, setOriginal }) => {
   for (const key in data?.fields) {
     postData.append(key, data.fields[key]);
   }
-  image = data.url+data.fields['key']
+  image = data.fields['key']
+  image_url = data.url
   setOriginal(data.url+data.fields['key']);
   postData.append('file', file);
 
@@ -70,7 +71,8 @@ const DirectUploadExample = () => {
             .then(() => {
              // setMessage('File upload completed!');
                  const root = ReactDOM.createRoot(document.getElementById('container'));
-                 root.render( <EventSourceComponent image_url={image} />);
+                 root.render( <EventSourceComponent image_url={image_url} image={image} />);
+                 
             })
         )
         .catch((error) => { 
