@@ -1,18 +1,22 @@
 import React, { useState, useEffect } from 'react';
 
-const EventSourceComponent = ({image_url, image}) => {
+const EventSourceComponent = ({image_url, image_name}) => {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
         // Create a new EventSource instance
-        const eventSource = new EventSource(`http://44.219.209.251:8000/events/${image.replace("original/", "")}`);
+        console.log(image_name);
+        const eventSource = new EventSource(`http://44.219.209.251:8000/events/${image_name.replace("original/", "")}`);
 
         // Handle a message event
         eventSource.onmessage = (event) => {
             const newMessage = JSON.parse(event.data);
-            if (newMessage.content != "not-found")
-                setMessages(prevMessages => [...prevMessages, newMessage]);
-            //eventSource.close();
+            if (newMessage.content !== "not-found")
+                {
+                    setMessages(prevMessages => [...prevMessages, newMessage]);
+                    eventSource.close();
+                }
+             console.log(newMessage.content)
         };
 
         // Handle any errors
@@ -25,16 +29,16 @@ const EventSourceComponent = ({image_url, image}) => {
         return () => {
             eventSource.close();
         };
-    }, []);
+    }, [image_url, image_name]);
 
     return (
         <div>
             <h2>Messages</h2>
             <ul>
-               <li key="x"> <img src={ image_url+image } alt="original" />  </li>
+               <li key="x"> <img src={ image_url+image_name } alt="original" />  </li>
                 {
                  messages.map((msg, index) => (
-                    <li key={index}> <img src={ image_url+image.replace("original/", "small/") } alt={msg.content} />  </li>
+                    <li key={index}> <img src={ image_url+image_name.replace("original/", "small/") } alt={msg.content} />  </li>
                 ))}
             </ul>
         </div>
