@@ -5,7 +5,7 @@ import { useState } from 'react';
 import EventSourceComponent from './Notify.js';
 //import { BASE_BACKEND_URL } from 'config/urls';
 //import { getConfig } from 'config/api';
-const BASE_BACKEND_URL = 'http://44.219.209.251:8000';
+//const REACT_APP_BACKEND_URL = 'http://44.219.209.251:8000';
 let image_name = undefined;
 let image_url = undefined
 /*function Image({image_url}) {
@@ -16,7 +16,7 @@ let image_url = undefined
 
 const directUploadStart = ({ fileName, fileType }) => {
   return axios.post(
-    `${BASE_BACKEND_URL}/api/files/upload/direct/start/`,
+    `${process.env.REACT_APP_BACKEND_URL}/api/files/upload/direct/start/`,
     { file_name: fileName, file_type: fileType },
     { headers: { 'Content-Type': 'application/json' }
       
@@ -42,7 +42,7 @@ const directUploadDo = ({ data, file, setOriginal }) => {
 
 const directUploadFinish = ({ data }) => {
   return axios.post(
-    `${BASE_BACKEND_URL}/api/files/upload/direct/finish/`,
+    `${process.env.REACT_APP_BACKEND_URL}/api/files/upload/direct/finish/`,
     { file_id: data.id }
   );
 };
