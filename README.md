@@ -16,5 +16,5 @@ el valor de las variables de entorno se copian al html generado y son visibles p
 
 Puedes ejecutar el servidor de esta manera:
 ```
-REACT_APP_BACKEND_URL=http://44.219.209.251:8000 npm start
+REACT_APP_BACKEND_URL=http://<host>:<port> npm start
 ```
