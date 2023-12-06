@@ -6,7 +6,7 @@ const EventSourceComponent = ({image_url, image_name}) => {
     useEffect(() => {
         // Create a new EventSource instance
         console.log(image_name);
-        const eventSource = new EventSource(`http://${process.env.REACT_APP_BACKEND_URL}/events/${image_name.replace("original/", "")}`);
+        const eventSource = new EventSource(`${process.env.REACT_APP_BACKEND_URL}/events/${image_name.replace("original/", "")}`);
 
         // Handle a message event
         eventSource.onmessage = (event) => {
